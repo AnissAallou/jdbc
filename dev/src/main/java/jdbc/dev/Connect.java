@@ -2,6 +2,7 @@ package jdbc.dev;
 
 import java.io.PrintWriter;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -10,12 +11,12 @@ public class Connect
 {
 	public static void main(String[] args)
 	{
-		Connection conn = null;
+		Connection connection = null;
 
 		try
 		{
-			conn = Connect.getConnection();
-			
+			connection = Connect.getConnectionMatiere();
+			connection = Connect.getConnectionLivre();
 
 			System.out.println("Connexion effective !");
 		}
@@ -27,7 +28,7 @@ public class Connect
 		{
 			try
 			{
-				conn.close();
+				connection.close();
 			}
 			catch (SQLException e)
 			{
@@ -36,7 +37,7 @@ public class Connect
 		}
 	}
 
-	public static Connection getConnection() throws Exception
+	public static Connection getConnectionMatiere() throws Exception
 	{
 		DriverManager.setLogWriter(new PrintWriter(System.out));
 		Class.forName("com.mysql.cj.jdbc.Driver");
@@ -45,5 +46,22 @@ public class Connect
 		String passwd = "root";
 
 		return DriverManager.getConnection(url, user, passwd);
+
 	}
+	
+	
+	public static Connection getConnectionLivre() throws Exception
+	{
+		DriverManager.setLogWriter(new PrintWriter(System.out));
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		String url = "jdbc:mysql://localhost:3306/livre?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+		String user = "root";
+		String passwd = "root";
+
+		return DriverManager.getConnection(url, user, passwd);
+		
+
+	}
+	
+	
 }
